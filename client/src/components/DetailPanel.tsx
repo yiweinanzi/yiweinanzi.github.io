@@ -105,7 +105,7 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
           role="dialog"
           aria-modal="true"
           aria-labelledby="detail-panel-title"
-          className="relative w-full max-w-[620px] max-h-[80vh] bg-white rounded-[22px] overflow-hidden pointer-events-auto flex flex-col"
+          className="relative w-full max-w-[620px] h-[80vh] max-h-[80vh] bg-white rounded-[22px] overflow-hidden pointer-events-auto flex flex-col"
           style={{
             transformOrigin: getTransformOrigin(),
             boxShadow: `
@@ -192,10 +192,10 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
           </div>
 
           {/* Scrollable content */}
-          <div className="relative flex-1 overflow-hidden">
+          <div className="relative flex-1 min-h-0 overflow-hidden">
             <div
               ref={scrollRef}
-              className="h-full overflow-y-auto overscroll-contain px-8 md:px-10 py-6"
+              className="absolute inset-0 overflow-y-auto overscroll-contain px-8 md:px-10 py-6"
               tabIndex={-1}
             >
               <div className="space-y-8">

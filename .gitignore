@@ -107,6 +107,7 @@ temp/
 
 # Webdev artifacts (checkpoint zips, migrations, etc.)
 .webdev/
+doc/
 ideas.md
 template.json
 *_PRD*.md
