@@ -14,7 +14,7 @@ import { ChevronDown, Github, FileText, ArrowDown } from 'lucide-react';
 
 const stats = [
   { value: '5k+', label: 'GitHub Stars', desc: 'AgentGuide 开源项目' },
-  { value: '4篇', label: '一作论文', desc: '含 ICML 2026 Spotlight' },
+  { value: '119K', label: 'QA Pairs', desc: 'VQA11y Benchmark' },
   { value: 'Spotlight', label: 'ICML 2026', desc: '顶级会议认可' },
   { value: '-95%', label: 'Token 压缩', desc: '40k → 2,298 tokens' },
 ];
@@ -110,7 +110,7 @@ export default function Hero() {
                 <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform duration-200" />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/adongwanai/AgentGuide"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-white/90 text-[#1A1A1E] text-[13px] font-medium border border-[#E9E7E2] hover:border-[#2D5BFF]/25 hover:text-[#2D5BFF] transition-all duration-200 hover:-translate-y-0.5 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[#2D5BFF]/30"
@@ -119,11 +119,11 @@ export default function Hero() {
                 GitHub
               </a>
               <a
-                href="#"
+                href="#timeline"
                 className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-white/90 text-[#1A1A1E] text-[13px] font-medium border border-[#E9E7E2] hover:border-[#2D5BFF]/25 hover:text-[#2D5BFF] transition-all duration-200 hover:-translate-y-0.5 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[#2D5BFF]/30"
               >
                 <FileText className="w-4 h-4" />
-                简历
+                成果
               </a>
             </motion.div>
           </motion.div>

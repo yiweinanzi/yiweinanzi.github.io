@@ -26,6 +26,7 @@ export default function TimelineNodeCard({ node, index, isSelected, onSelect }: 
   const cardRef = useRef<HTMLButtonElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
   const typeColor = nodeTypeConfig[node.type].color;
+  const primaryImage = node.images?.[0];
 
   const handleClick = () => {
     if (cardRef.current) {
@@ -101,6 +102,18 @@ export default function TimelineNodeCard({ node, index, isSelected, onSelect }: 
             className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-40 transition-opacity duration-400"
             style={{ background: `linear-gradient(90deg, transparent, ${typeColor}, transparent)` }}
           />
+
+          {/* Visual thumbnail */}
+          {primaryImage && (
+            <div className="relative mb-4 aspect-[16/9] w-full overflow-hidden rounded-lg border border-[#E9E7E2]/55 bg-[#FAFAF8]">
+              <img
+                src={primaryImage.src}
+                alt={primaryImage.caption || node.title}
+                className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-[1.025]"
+                loading="lazy"
+              />
+            </div>
+          )}
 
           {/* Date & type badge row */}
           <div className="flex items-center flex-wrap gap-2 mb-3.5">

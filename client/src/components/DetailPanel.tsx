@@ -73,6 +73,14 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
   };
 
   const typeColor = nodeTypeConfig[node.type].color;
+  const starItems = node.detail?.star
+    ? [
+        { label: 'S', title: '背景', value: node.detail.star.situation },
+        { label: 'T', title: '任务', value: node.detail.star.task },
+        { label: 'A', title: '行动', value: node.detail.star.action },
+        { label: 'R', title: '结果', value: node.detail.star.result },
+      ]
+    : [];
 
   return (
     <>
@@ -204,6 +212,39 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
                   {node.oneLiner}
                 </p>
 
+                {/* Keywords */}
+                {node.keywords && node.keywords.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {node.keywords.map((keyword) => (
+                      <span
+                        key={keyword}
+                        className="px-2.5 py-1 rounded-lg text-[11px] font-semibold border"
+                        style={{
+                          color: `${typeColor}DD`,
+                          backgroundColor: `${typeColor}08`,
+                          borderColor: `${typeColor}18`,
+                        }}
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Abstract */}
+                {node.abstract && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.06, duration: 0.35 }}
+                  >
+                    <SectionLabel>摘要</SectionLabel>
+                    <p className="text-[14px] text-[#1A1A1E]/62 leading-[1.9]">
+                      {node.abstract}
+                    </p>
+                  </motion.div>
+                )}
+
                 {/* Metrics — visual hero */}
                 {node.metrics && node.metrics.length > 0 && (
                   <motion.div
@@ -274,6 +315,34 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
                       </DetailSection>
                     )}
 
+                    {node.contribution && node.contribution.length > 0 && (
+                      <DetailSection label="我的贡献">
+                        <ul className="space-y-3">
+                          {node.contribution.map((item, i) => (
+                            <motion.li
+                              key={i}
+                              className="flex items-start gap-3.5"
+                              initial={{ opacity: 0, x: -6 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.18 + i * 0.04, duration: 0.3 }}
+                            >
+                              <span
+                                className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold"
+                                style={{
+                                  color: typeColor,
+                                  backgroundColor: `${typeColor}0C`,
+                                  border: `1px solid ${typeColor}18`,
+                                }}
+                              >
+                                {i + 1}
+                              </span>
+                              <span className="text-[14px] text-[#1A1A1E]/60 leading-[1.85]">{item}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </DetailSection>
+                    )}
+
                     {node.detail.approach && node.detail.approach.length > 0 && (
                       <DetailSection label="技术方案">
                         <ul className="space-y-3">
@@ -296,6 +365,37 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
                             </motion.li>
                           ))}
                         </ul>
+                      </DetailSection>
+                    )}
+
+                    {starItems.length > 0 && (
+                      <DetailSection label="STAR 提炼">
+                        <div className="grid gap-3">
+                          {starItems.map((item, i) => (
+                            <motion.div
+                              key={item.label}
+                              className="grid grid-cols-[32px_1fr] gap-3 rounded-2xl border border-[#E9E7E2]/45 bg-[#FAFAF8] p-4"
+                              initial={{ opacity: 0, y: 6 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.24 + i * 0.04, duration: 0.3 }}
+                            >
+                              <div
+                                className="flex h-8 w-8 items-center justify-center rounded-xl text-[13px] font-bold"
+                                style={{
+                                  color: typeColor,
+                                  backgroundColor: `${typeColor}0D`,
+                                  border: `1px solid ${typeColor}18`,
+                                }}
+                              >
+                                {item.label}
+                              </div>
+                              <div>
+                                <p className="text-[12px] font-semibold text-[#1A1A1E]/70">{item.title}</p>
+                                <p className="mt-1 text-[13px] leading-[1.8] text-[#1A1A1E]/60">{item.value}</p>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
                       </DetailSection>
                     )}
 
