@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Portfolio favicon</title>
+  <rect width="64" height="64" rx="18" fill="#1A1A1E" />
+  <circle cx="19" cy="22" r="6" fill="#10B981" />
+  <path
+    d="M17 36H47"
+    fill="none"
+    stroke="#F8F7F4"
+    stroke-width="7"
+    stroke-linecap="round" />
+  <path
+    d="M40 17c6 4 9 9 9 15s-3 11-9 15"
+    fill="none"
+    stroke="#2D5BFF"
+    stroke-width="5"
+    stroke-linecap="round" />
+</svg>
