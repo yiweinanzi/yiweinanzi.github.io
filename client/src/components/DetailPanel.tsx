@@ -73,6 +73,8 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
   };
 
   const typeColor = nodeTypeConfig[node.type].color;
+  const primaryImage = node.images?.[0];
+  const secondaryImages = node.images?.slice(1) ?? [];
   const starItems = node.detail?.star
     ? [
         { label: 'S', title: '背景', value: node.detail.star.situation },
@@ -207,6 +209,44 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
               tabIndex={-1}
             >
               <div className="space-y-8">
+                {/* Primary visual — keep card and detail hierarchy aligned */}
+                {primaryImage && (
+                  <motion.figure
+                    className="overflow-hidden rounded-2xl border border-[#E9E7E2]/45 bg-[#FAFAF8]"
+                    style={{ boxShadow: '0 2px 12px rgba(20,20,30,.03)' }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.04, duration: 0.35 }}
+                  >
+                    <div className="flex min-h-[180px] items-center justify-center p-3">
+                      <img
+                        src={primaryImage.src}
+                        alt={primaryImage.caption || node.title}
+                        className="max-h-[360px] w-full object-contain"
+                        loading="eager"
+                      />
+                    </div>
+                    {primaryImage.caption && (
+                      <figcaption className="border-t border-[#E9E7E2]/30 bg-white/70 px-4 py-3">
+                        <p className="text-[11px] text-[#76767E] leading-relaxed flex items-center gap-2">
+                          {primaryImage.type && (
+                            <span
+                              className="inline-block px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider"
+                              style={{
+                                backgroundColor: `${typeColor}08`,
+                                color: `${typeColor}CC`,
+                              }}
+                            >
+                              {primaryImage.type}
+                            </span>
+                          )}
+                          <span>{primaryImage.caption}</span>
+                        </p>
+                      </figcaption>
+                    )}
+                  </motion.figure>
+                )}
+
                 {/* One liner — editorial lead */}
                 <p className="text-[15px] text-[#1A1A1E]/70 leading-[1.85] font-light">
                   {node.oneLiner}
@@ -424,7 +464,7 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
                 )}
 
                 {/* Images gallery */}
-                {node.images && node.images.length > 0 && (
+                {secondaryImages.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -432,7 +472,7 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
                   >
                     <SectionLabel>相关图示</SectionLabel>
                     <div className="space-y-3.5">
-                      {node.images.map((img, i) => (
+                      {secondaryImages.map((img, i) => (
                         <div
                           key={i}
                           className="rounded-2xl overflow-hidden border border-[#E9E7E2]/40"
