@@ -71,7 +71,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
             >
-              一位男子
+              Ziqian Wang
             </motion.h1>
 
             {/* Subtitle — refined spacing */}

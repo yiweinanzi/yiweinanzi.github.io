@@ -161,7 +161,7 @@ export default function Footer() {
           <div className="h-px bg-gradient-to-r from-transparent via-[#E9E7E2]/60 to-transparent mb-8" />
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <p className="text-[11px] text-[#B5B5BD] tracking-wide">
-              © 2026 一位男子 · Built with care for accessibility
+              © 2026 Ziqian Wang · Built with care for accessibility
             </p>
             <p className="text-[11px] text-[#B5B5BD] tracking-wide">
               本站践行 WCAG AA 无障碍标准 — 因为这正是我的研究方向

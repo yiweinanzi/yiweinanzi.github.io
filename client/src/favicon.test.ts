@@ -9,6 +9,10 @@ const indexHtml = readFileSync(resolve(clientRoot, 'index.html'), 'utf8');
 const publicRoot = resolve(clientRoot, 'public');
 
 describe('site favicon', () => {
+  it('uses the public English name in the browser tab title', () => {
+    expect(indexHtml).toContain('<title>Ziqian Wang · 面试作品集</title>');
+  });
+
   it('declares a browser tab icon and ships the referenced asset', () => {
     expect(indexHtml).toContain('rel="icon"');
     expect(indexHtml).toContain('href="/favicon.svg"');
@@ -21,7 +25,8 @@ describe('site favicon', () => {
 
     const manifest = JSON.parse(readFileSync(resolve(publicRoot, 'site.webmanifest'), 'utf8'));
 
-    expect(manifest.name).toBe('一位男子 · 面试作品集');
+    expect(manifest.name).toBe('Ziqian Wang · 面试作品集');
+    expect(manifest.short_name).toBe('Ziqian Wang');
     expect(manifest.icons?.some((icon: { src?: string }) => icon.src === '/favicon.svg')).toBe(true);
   });
 });
