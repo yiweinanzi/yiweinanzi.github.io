@@ -204,7 +204,7 @@ export const timelineNodes: TimelineNode[] = [
       },
     },
     links: [
-      { label: 'KTClaw', url: 'https://clawcorp.top' },
+      { label: 'KTClaw', url: 'https://landing-page-pddx.vercel.app/' },
       { label: 'EvoMap', url: 'https://hackathon.evomap.ai' },
     ],
   },

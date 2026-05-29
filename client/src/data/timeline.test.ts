@@ -56,6 +56,13 @@ describe('portfolio timeline content', () => {
     }
   });
 
+  it('links the KTClaw project to the deployed landing page', () => {
+    const ktclaw = byId.get('ktclaw');
+    const primaryLink = ktclaw?.links?.find((link) => link.label === 'KTClaw');
+
+    expect(primaryLink?.url).toBe('https://landing-page-pddx.vercel.app/');
+  });
+
   it('uses committed figure assets for visual paper cards', () => {
     const visualPaperIds = [
       'vqa11y-neurips-2026',
