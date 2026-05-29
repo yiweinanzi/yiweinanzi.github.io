@@ -115,7 +115,7 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
           role="dialog"
           aria-modal="true"
           aria-labelledby="detail-panel-title"
-          className="relative w-full max-w-[620px] h-[80vh] max-h-[80vh] bg-white rounded-[22px] overflow-hidden pointer-events-auto flex flex-col"
+          className="relative w-full max-w-[620px] h-[88vh] max-h-[88vh] bg-white rounded-[22px] overflow-hidden pointer-events-auto flex flex-col"
           style={{
             transformOrigin: getTransformOrigin(),
             boxShadow: `

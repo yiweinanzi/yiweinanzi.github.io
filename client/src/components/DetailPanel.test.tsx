@@ -6,6 +6,22 @@ import { timelineNodes } from '@/data/timeline';
 import type { TimelineNode } from '@/data/timeline';
 
 describe('DetailPanel visual hierarchy', () => {
+  it('uses a taller modal viewport so project details have more visible room', () => {
+    const node: TimelineNode = {
+      id: 'layout-check',
+      type: '项目',
+      date: '2026',
+      title: 'Layout Check',
+      oneLiner: 'The detail panel should have a taller viewport.',
+    };
+
+    const markup = renderToStaticMarkup(<DetailPanel node={node} onClose={() => undefined} />);
+
+    expect(markup).toContain('h-[88vh]');
+    expect(markup).toContain('max-h-[88vh]');
+    expect(markup).not.toContain('h-[80vh]');
+  });
+
   it('shows the primary figure before the opening summary and avoids duplicating it in the gallery', () => {
     const node: TimelineNode = {
       id: 'visual-paper',
