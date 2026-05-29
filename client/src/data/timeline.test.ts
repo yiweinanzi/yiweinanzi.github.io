@@ -36,7 +36,13 @@ describe('portfolio timeline content', () => {
   });
 
   it('covers core resume projects with STAR structure and metrics', () => {
-    const expectedProjectIds = ['goafar-agentic-planning', 'ktclaw', 'tinyclaw'];
+    const expectedProjectIds = [
+      'goafar-agentic-planning',
+      'lenovo-agent-algorithm',
+      'ktclaw',
+      'tinyclaw',
+      'agentguide',
+    ];
 
     for (const id of expectedProjectIds) {
       const node = byId.get(id) as any;
