@@ -6,6 +6,7 @@ export type TimelineNode = {
   date: string;
   side?: 'left' | 'right';
   draft?: boolean;
+  hideTypeBadge?: boolean;
   status?: string;
   title: string;
   org?: string;
@@ -175,10 +176,11 @@ export const timelineNodes: TimelineNode[] = [
   },
   {
     id: 'ktclaw',
-    type: '项目',
+    type: '实习经历',
     date: '2026.04',
+    hideTypeBadge: true,
     status: 'EvoMap 黑客松第一',
-    title: 'KTClaw · 多 Agent + 分层记忆',
+    title: '联想实习 · KTClaw · 多 Agent + 分层记忆',
     org: '联想 / EvoMap Hackathon',
     oneLiner: '用多 Agent 协同、四层记忆和多路检索压缩企业任务上下文，让复杂任务更稳、更便宜、更容易复用。',
     metrics: [
@@ -210,10 +212,11 @@ export const timelineNodes: TimelineNode[] = [
   },
   {
     id: 'tinyclaw',
-    type: '项目',
+    type: '实习经历',
     date: '2026.05',
+    hideTypeBadge: true,
     status: '京东上架',
-    title: 'TinyClaw · RAG-to-Skill 自进化 Agent',
+    title: '联想实习 · TinyClaw · RAG-to-Skill 自进化 Agent',
     org: '联想 / 端侧项目',
     oneLiner: '把 SOP、Skill 和可执行脚本做成三层程序性记忆，让端侧 Agent 能从轨迹中提炼、召回、修订和复用经验。',
     metrics: [

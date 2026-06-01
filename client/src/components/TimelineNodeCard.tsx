@@ -123,16 +123,18 @@ export default function TimelineNodeCard({ node, index, isSelected, onSelect }: 
             >
               {node.date}
             </span>
-            <span
-              className="text-[10px] px-2 py-[3px] rounded-lg font-semibold tracking-wide"
-              style={{
-                backgroundColor: `${typeColor}0A`,
-                color: typeColor,
-                border: `1px solid ${typeColor}15`,
-              }}
-            >
-              {nodeTypeConfig[node.type].icon} {node.type}
-            </span>
+            {!node.hideTypeBadge && (
+              <span
+                className="text-[10px] px-2 py-[3px] rounded-lg font-semibold tracking-wide"
+                style={{
+                  backgroundColor: `${typeColor}0A`,
+                  color: typeColor,
+                  border: `1px solid ${typeColor}15`,
+                }}
+              >
+                {nodeTypeConfig[node.type].icon} {node.type}
+              </span>
+            )}
             {node.status && (
               <span className="text-[10px] px-2 py-[3px] rounded-lg bg-[#2D5BFF]/5 text-[#2D5BFF] font-semibold border border-[#2D5BFF]/10 tracking-wide">
                 {node.status}

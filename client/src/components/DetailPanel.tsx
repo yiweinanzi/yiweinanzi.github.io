@@ -150,16 +150,18 @@ export default function DetailPanel({ node, onClose, originRect }: Props) {
               <div className="space-y-3 flex-1">
                 {/* Badges */}
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span
-                    className="text-[11px] px-2.5 py-[5px] rounded-lg font-semibold tracking-wide"
-                    style={{
-                      backgroundColor: `${typeColor}0C`,
-                      color: typeColor,
-                      border: `1px solid ${typeColor}1A`,
-                    }}
-                  >
-                    {nodeTypeConfig[node.type].icon} {node.type}
-                  </span>
+                  {!node.hideTypeBadge && (
+                    <span
+                      className="text-[11px] px-2.5 py-[5px] rounded-lg font-semibold tracking-wide"
+                      style={{
+                        backgroundColor: `${typeColor}0C`,
+                        color: typeColor,
+                        border: `1px solid ${typeColor}1A`,
+                      }}
+                    >
+                      {nodeTypeConfig[node.type].icon} {node.type}
+                    </span>
+                  )}
                   {node.status && (
                     <span className="text-[11px] px-2.5 py-[5px] rounded-lg bg-[#2D5BFF]/5 text-[#2D5BFF] font-semibold border border-[#2D5BFF]/10 tracking-wide">
                       {node.status}

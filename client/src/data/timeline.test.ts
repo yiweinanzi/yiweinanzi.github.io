@@ -63,6 +63,17 @@ describe('portfolio timeline content', () => {
     expect(primaryLink?.url).toBe('https://landing-page-pddx.vercel.app/');
   });
 
+  it('models KTClaw and TinyClaw as Lenovo internship subprojects without a project badge', () => {
+    for (const id of ['ktclaw', 'tinyclaw']) {
+      const node = byId.get(id);
+
+      expect(node?.type, `${id} should be grouped under internship experience`).toBe('实习经历');
+      expect(node?.title, `${id} should carry the internship prefix`).toMatch(/^联想实习 · /);
+      expect(node?.hideTypeBadge, `${id} should not show a generic project badge`).toBe(true);
+      expect(node?.status?.length ?? 0, `${id} should keep a concise second badge`).toBeGreaterThan(0);
+    }
+  });
+
   it('uses committed figure assets for visual paper cards', () => {
     const visualPaperIds = [
       'vqa11y-neurips-2026',
