@@ -21,7 +21,7 @@ const honors = [
   { text: '联想黑客松冠军', emoji: '🥇' },
   { text: 'ICML 2026 Spotlight', emoji: '🌟' },
   { text: '推免保送北京理工大学', emoji: '🎓' },
-  { text: 'AgentGuide 5k+ Stars', emoji: '⭐' },
+  { text: 'AgentGuide 5.4k+ Stars', emoji: '⭐' },
   { text: 'ICONIP 2024 发表', emoji: '📄' },
   { text: 'NeurIPS / EMNLP 在投', emoji: '📝' },
 ];

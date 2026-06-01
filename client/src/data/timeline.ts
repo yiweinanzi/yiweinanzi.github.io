@@ -225,13 +225,13 @@ export const timelineNodes: TimelineNode[] = [
     contribution: [
       '一作主导问题定义、benchmark 构建、A-CoT/GoA 方法设计和论文主线叙事。',
       '设计安全加权评测指标与 19 组模型实验，对比 baseline、SFT+DPO 与结构化推理方案。',
-      '推动数据集公开到 Hugging Face，并在简历材料中记录 35k+ 下载与 VQA 数据集排名 #12。',
+      '推动数据集公开到 Hugging Face，并在简历材料中记录 37k+ 下载与 VQA 数据集排名 #12。',
     ],
     keywords: ['Accessibility', 'VQA', 'A-CoT', 'GoA'],
     metrics: [
       { after: '119K', label: 'QA pairs' },
       { before: '51.6', after: '74.6', label: 'Qwen3-VL-8B' },
-      { after: '35k+', label: 'HF Downloads' },
+      { after: '37k+', label: 'HF Downloads' },
     ],
     images: [
       {
@@ -255,7 +255,7 @@ export const timelineNodes: TimelineNode[] = [
         situation: '现有 VLM 在通用视觉问答上表现不错，但在 BLV 导航场景中容易漏掉台阶、湿滑路面、倒计时红绿灯等安全关键线索。',
         task: '我需要构建一个能评估真实无障碍推理能力的 benchmark，并提出让模型围绕证据进行保守决策的方法。',
         action: '我主导构建 VQA11y 数据集，设计 A-CoT 标注、VQA11y-Score 与 GoA 结构化推理，并完成多模型评测。',
-        result: 'Qwen3-VL-8B 在该设置下从 51.6 提升到 74.6，数据集获得 35k+ 下载，成为简历中最能体现无障碍多模态研究主线的工作。',
+        result: 'Qwen3-VL-8B 在该设置下从 51.6 提升到 74.6，数据集获得 37k+ 下载，成为简历中最能体现无障碍多模态研究主线的工作。',
       },
     },
   },
@@ -485,12 +485,12 @@ export const timelineNodes: TimelineNode[] = [
     id: 'agentguide',
     type: '开源',
     date: '2026',
-    status: '5k+ Stars',
+    status: '5.4k+ Stars',
     title: 'AgentGuide · Agent 面试与知识图谱',
     org: 'GitHub 开源项目',
     oneLiner: '用 OpenClaw 自动化整理 30k+ Agent 面试经验，抽取高频知识点并组织成原理层、工程层、面试层知识图谱。',
     metrics: [
-      { after: '5k+', label: 'GitHub Stars' },
+      { after: '5.4k+', label: 'GitHub Stars' },
       { after: '30k+', label: '经验样本' },
       { after: 'Top 20', label: 'Multi-Agent Topic' },
     ],
@@ -508,7 +508,7 @@ export const timelineNodes: TimelineNode[] = [
         situation: 'Agent 方向论文、工具和面试经验增长很快，新入门者很难区分核心原理、工程实践和面试高频问题。',
         task: '我的目标是把分散资料整理成可检索、可持续维护的知识图谱，并让开源项目对求职和学习都真正有用。',
         action: '我基于 OpenClaw 搭建爬取/清洗/合并流水线，用 LLM 从 30k+ 面试经验中抽取高频知识点并分层组织。',
-        result: 'AgentGuide 获得 5k+ GitHub Stars，进入 Multi-Agent topic Top 20，成为简历中体现开源影响力和工程自动化能力的项目。',
+        result: 'AgentGuide 获得 5.4k+ GitHub Stars，进入 Multi-Agent topic Top 20，成为简历中体现开源影响力和工程自动化能力的项目。',
       },
     },
     links: [{ label: 'GitHub', url: 'https://github.com/adongwanai/AgentGuide' }],

@@ -13,8 +13,8 @@ import { motion } from 'framer-motion';
 import { ChevronDown, Github, FileText, ArrowDown } from 'lucide-react';
 
 const stats = [
-  { value: '5k+', label: 'GitHub Stars', desc: 'AgentGuide 开源项目' },
-  { value: '119K', label: 'QA Pairs', desc: 'VQA11y Benchmark' },
+  { value: '5.4k+', label: 'GitHub Stars', desc: 'AgentGuide 开源项目' },
+  { value: '37k+', label: 'Downloads', desc: 'VQA11y Dataset' },
   { value: 'Spotlight', label: 'ICML 2026', desc: '顶级会议认可' },
   { value: '-95%', label: 'Token 压缩', desc: '40k → 2,298 tokens' },
 ];
