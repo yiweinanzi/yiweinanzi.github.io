@@ -14,7 +14,11 @@ import { timelineNodes, nodeTypeConfig, type TimelineNode, type NodeType } from 
 import TimelineNodeCard from './TimelineNodeCard';
 import DetailPanel from './DetailPanel';
 
-const allTypes: NodeType[] = ['教育', '实习经历', '项目', '论文', '开源', '荣誉'];
+const filterOrder: NodeType[] = ['教育', '实习经历', '项目', '论文', '开源', '荣誉'];
+
+export const timelineFilterTypes: NodeType[] = filterOrder.filter((type) =>
+  timelineNodes.some((node) => node.type === type),
+);
 
 export default function Timeline() {
   const [activeFilter, setActiveFilter] = useState<NodeType | null>(null);
@@ -83,7 +87,7 @@ export default function Timeline() {
           >
             全部
           </motion.button>
-          {allTypes.map((type) => (
+          {timelineFilterTypes.map((type) => (
             <motion.button
               key={type}
               role="tab"

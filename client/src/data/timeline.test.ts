@@ -38,7 +38,6 @@ describe('portfolio timeline content', () => {
   it('covers core resume projects with STAR structure and metrics', () => {
     const expectedProjectIds = [
       'goafar-agentic-planning',
-      'lenovo-agent-algorithm',
       'ktclaw',
       'tinyclaw',
       'agentguide',
@@ -61,6 +60,10 @@ describe('portfolio timeline content', () => {
     const primaryLink = ktclaw?.links?.find((link) => link.label === 'KTClaw');
 
     expect(primaryLink?.url).toBe('https://landing-page-pddx.vercel.app/');
+  });
+
+  it('does not show a separate Lenovo internship summary card once its subprojects are listed', () => {
+    expect(byId.has('lenovo-agent-algorithm')).toBe(false);
   });
 
   it('models KTClaw and TinyClaw as Lenovo internship subprojects without a project badge', () => {

@@ -145,36 +145,6 @@ export const timelineNodes: TimelineNode[] = [
     },
   },
   {
-    id: 'lenovo-agent-algorithm',
-    type: '实习经历',
-    date: '2026.03-05',
-    title: '联想开天 · Agent 算法实习',
-    org: '联想开天',
-    oneLiner: '围绕企业级 Agent 的多 Agent 编排、分层记忆、评测归因和产品化交付，做从研究到演示系统的闭环。',
-    metrics: [
-      { before: '15%', after: '3%', label: '任务错误率' },
-      { after: '20+', label: '模型接入' },
-      { after: '100万+', label: '产品覆盖设备/年' },
-    ],
-    keywords: ['多 Agent', '分层记忆', '企业级 Agent'],
-    detail: {
-      background: '企业级 Agent 需要处理跨渠道入口、多模型调用、工具失败、上下文膨胀和可追踪评测，不只是把 prompt 串起来。',
-      role: 'Agent 算法实习生',
-      approach: [
-        '参与主 Agent + 专家 Agent 的职责拆分，隔离不同任务上下文并降低串扰。',
-        '建设失败回放、Skill 修订和评测归因流程，将错误样例变成可持续优化的系统资产。',
-        '围绕稳定性、问题解决准确率、记忆命中率、Skill 复用率、Recall@K/MRR 和满意度做指标化评估。',
-      ],
-      retrospective: '这段实习把“Agent demo 能跑”推进到“Agent 链路可回放、可评测、可解释”。',
-      star: {
-        situation: '企业级 Agent 需要跨入口、跨模型、跨工具稳定处理任务，问题不只是生成答案，还包括上下文串扰、工具失败和线上可追踪性。',
-        task: '我的任务是把研究型 Agent 能力整理成可演示、可评测、可持续修订的产品化链路，支撑 KTClaw 和 TinyClaw 等项目落地。',
-        action: '我参与多 Agent 职责拆分、分层记忆和失败回放设计，搭建从错误样例到 Skill 修订再到指标评估的闭环。',
-        result: '内部任务错误率从 15% 降到 3%，链路支持 20+ 模型和多渠道入口，并服务于年覆盖百万级设备的产品方向。',
-      },
-    },
-  },
-  {
     id: 'ktclaw',
     type: '实习经历',
     date: '2026.04',
