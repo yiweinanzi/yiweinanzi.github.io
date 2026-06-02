@@ -55,6 +55,24 @@ describe('portfolio timeline content', () => {
     }
   });
 
+  it('uses concrete technical anchors in core project STAR copy', () => {
+    const expectedAnchors: Record<string, string[]> = {
+      'goafar-agentic-planning': ['next-POI', 'OR-Tools', 'GRPO', 'reward hacking'],
+      ktclaw: ['上下文污染', 'trace_id', '四层记忆', '动态上下文'],
+      tinyclaw: ['SOP', 'Skill', '失败回退', '端侧'],
+      agentguide: ['OpenClaw', '30k+', '知识图谱', 'Top 20'],
+    };
+
+    for (const [id, anchors] of Object.entries(expectedAnchors)) {
+      const node = byId.get(id);
+      const starCopy = JSON.stringify(node?.detail?.star);
+
+      for (const anchor of anchors) {
+        expect(starCopy, `${id} STAR should mention ${anchor}`).toContain(anchor);
+      }
+    }
+  });
+
   it('links the KTClaw project to the deployed landing page', () => {
     const ktclaw = byId.get('ktclaw');
     const primaryLink = ktclaw?.links?.find((link) => link.label === 'KTClaw');
