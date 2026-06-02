@@ -62,6 +62,19 @@ describe('portfolio timeline content', () => {
     expect(primaryLink?.url).toBe('https://landing-page-pddx.vercel.app/');
   });
 
+  it('links VQA11y to the Hugging Face VQA dataset ranking page', () => {
+    const vqa11y = byId.get('vqa11y-neurips-2026');
+    const datasetLink = vqa11y?.links?.find((link) => link.label === 'Hugging Face Dataset');
+
+    expect(datasetLink?.url).toBe('https://huggingface.co/datasets?sort=downloads&search=vqa');
+  });
+
+  it('keeps public timeline copy focused on the work rather than resume or interview framing', () => {
+    const publicCopy = JSON.stringify(timelineNodes);
+
+    expect(publicCopy).not.toMatch(/保证面试中|面试官|简历材料|简历中|求职|面试经验|面试问题/);
+  });
+
   it('does not show a separate Lenovo internship summary card once its subprojects are listed', () => {
     expect(byId.has('lenovo-agent-algorithm')).toBe(false);
   });

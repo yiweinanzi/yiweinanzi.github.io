@@ -119,7 +119,7 @@ export const timelineNodes: TimelineNode[] = [
     date: '2025.01-06',
     title: 'GoAfar · Agentic 路线规划',
     org: 'GoAfar',
-    oneLiner: '把可验证奖励引入旅行路线规划 Agent，将“好不好玩”的主观规划转成可评估、可优化的约束求解问题。',
+    oneLiner: '把旅行路线规划改写成带 OR-Tools verifier 的序贯决策，用可验证奖励优化 next-POI 策略。',
     metrics: [
       { before: '60%', after: '92%', label: '路线可行率' },
       { before: '40%', after: '8%', label: '约束违规率' },
@@ -127,15 +127,15 @@ export const timelineNodes: TimelineNode[] = [
     ],
     keywords: ['Agentic RL', 'GRPO', 'OR-Tools', '检索增强规划'],
     detail: {
-      background: '旅行路线规划需要同时处理用户偏好、地理约束、营业时间、交通窗口和预算限制，纯 LLM 规划容易被同名 POI、伪捷径和跨文档营业时间干扰。',
+      background: '旅行路线规划需要同时处理用户偏好、地理约束、营业时间、交通窗口和预算限制；纯 SFT 路线看起来合理，但容易被同名 POI、伪捷径和跨文档营业时间干扰。',
       role: 'Agent 算法实习生',
       approach: [
         '构建语义、行为、地理三路检索，将 127,978 个 POI 与 38,580 条用户行为组织成可回放的规划证据。',
         '设计 4 类对抗干扰样本，包括同名 POI、伪直接路线、跨文档营业时间和主观差评混淆。',
-        '用 OR-Tools VRPTW 生成 0/1 可验证奖励，结合偏好、时间窗和类别多样性训练 GRPO 路线规划策略。',
-        '用 GPT-4o teacher agent 生成纠错轨迹，平均每条轨迹包含 8.3 次工具调用，支撑 Agent 迭代修正。',
+        '用 OR-Tools VRPTW 判断路线可行性，并把可行性、偏好匹配、类别多样性和移动时间组成 GRPO reward。',
+        '以 Qwen3-8B + LoRA 做 SFT → DPO → GRPO 后训练，覆盖 1,754 条 GRPO 样本。',
       ],
-      tradeoffs: '奖励越细，训练与调参成本越高；最终把最关键的可行性、时间窗和偏好约束放在前台，保证面试中可解释、可复现。',
+      tradeoffs: '奖励越细，训练与调参成本越高；实现上把可行性、时间窗和偏好约束作为主优化目标，同时监控路线长度、重复率和 reward hacking。',
       star: {
         situation: '真实旅行规划要同时满足地点、交通、营业时间和用户偏好，LLM 生成路线常被同名 POI、伪捷径和跨文档信息误导。',
         task: '我负责把“路线是否可行、是否符合偏好”变成可验证的训练信号，让规划 Agent 能在工具反馈中稳定纠错。',
@@ -152,7 +152,7 @@ export const timelineNodes: TimelineNode[] = [
     status: 'EvoMap 黑客松第一',
     title: '联想实习 · KTClaw · 多 Agent + 分层记忆',
     org: '联想 / EvoMap Hackathon',
-    oneLiner: '用多 Agent 协同、四层记忆和多路检索压缩企业任务上下文，让复杂任务更稳、更便宜、更容易复用。',
+    oneLiner: '将企业长任务拆成主 Agent 编排、专家 Agent 执行和四层记忆召回，减少检索片段、工具结果和草稿内容的上下文污染。',
     metrics: [
       { before: '40k+', after: '2,298', label: '上下文 tokens' },
       { after: '-95%', label: '上下文压缩' },
@@ -160,14 +160,14 @@ export const timelineNodes: TimelineNode[] = [
     ],
     keywords: ['Multi-Agent', 'Memory', 'RAG-to-Skill'],
     detail: {
-      background: '企业内部知识任务常常把 SOP、历史对话、文档和工具调用全部塞进上下文，导致成本高、链路不稳定、失败样例难以复用。',
+      background: '企业长任务中，检索结果、工具 observation、用户澄清、文档草稿和历史记忆容易混在同一个上下文里，导致成本高、链路不稳定、失败样例难以复用。',
       role: '核心算法与系统实现',
       approach: [
-        '设计主 Agent + 专家 Agent 架构，将任务规划、工具执行、记忆检索和失败修复分层处理。',
-        '构建 index、fact、procedure、archive 四层记忆，并通过 metadata、semantic、procedure relation 多路召回控制上下文。',
-        '接入飞书、微信、钉钉等入口和 20+ 模型，建立失败回放到 Skill 修订的闭环。',
+        '抽象多入口消息与任务状态，将主 Agent 负责拆解、路由和汇总，专家 Agent 处理检索、工具执行、文档生成与核验。',
+        '构建 index、fact、procedure、archive 四层记忆，并通过 metadata、semantic、procedure relation 多路召回动态组装上下文。',
+        '通过失败回放、trace_id、Skill 修订和评测归因，把工具异常、检索污染和格式错误纳入迭代闭环。',
       ],
-      tradeoffs: '多 Agent 提升了复杂任务覆盖，但也会增加调度成本；实现上优先保证上下文隔离和关键链路可观测。',
+      tradeoffs: '多 Agent 能降低上下文串扰，但会带来调度和观测成本；实现上优先保留任务边界、权限过滤和关键链路 trace。',
       star: {
         situation: '黑客松场景要求短时间证明企业 Agent 价值，但原始任务会把 SOP、历史记录和工具日志塞进 40k+ tokens 上下文。',
         task: '我负责设计核心算法链路，让系统既能压缩上下文，又能复用历史流程经验，并支撑现场多入口演示。',
@@ -188,7 +188,7 @@ export const timelineNodes: TimelineNode[] = [
     status: '京东上架',
     title: '联想实习 · TinyClaw · RAG-to-Skill 自进化 Agent',
     org: '联想 / 端侧项目',
-    oneLiner: '把 SOP、Skill 和可执行脚本做成三层程序性记忆，让端侧 Agent 能从轨迹中提炼、召回、修订和复用经验。',
+    oneLiner: '把端侧高频检索、问答和工具调用轨迹沉淀成 SOP、Skill 与可执行脚本，让设备优先复用已验证流程。',
     metrics: [
       { after: '3 层', label: '程序性记忆' },
       { after: '7k-10k', label: '季度预期销量' },
@@ -199,11 +199,11 @@ export const timelineNodes: TimelineNode[] = [
       background: '端侧 Agent 面临算力、隐私、延迟和稳定性约束，不能依赖无限长上下文，也不能每次都从零规划。',
       role: '算法与工程实现',
       approach: [
-        '设计 SOP、Skill、可执行脚本三层程序性记忆，将抽象流程和具体操作解耦。',
-        '实现轨迹记录、经验抽取、相似召回、Skill 修订和复用验证的 RAG-to-Skill 闭环。',
-        '围绕上架场景压缩任务边界，优先保证高频任务稳定执行和错误可回放。',
+        '记录 query、检索摘要、工具调用、输出和反馈，从成功/失败轨迹抽取前置条件、步骤、参数槽位和验证点。',
+        '设计 SOP、Skill、可执行脚本三层程序性记忆，让经验按成熟度从人可读流程升级为结构化技能或受限执行器。',
+        '用轻量向量检索和任务类型过滤召回候选 Skill，命中失败时回退完整 RAG 并进入修订队列。',
       ],
-      tradeoffs: '端侧自进化不能盲目追求开放域能力，必须把可学习范围限制在可验证的任务和流程内。',
+      tradeoffs: '端侧自进化不能让 Skill 库无限膨胀；需要按成功率、最近验证、工具版本和安全风险做降权、归档或回滚。',
       star: {
         situation: '端侧 Agent 要在低延迟、低成本和隐私约束下持续改进，不能依赖云端长上下文和每次从零规划。',
         task: '我负责把 RAG 检索升级成可复用的程序性 Skill 记忆，让端侧系统能从历史轨迹中沉淀稳定流程。',
@@ -219,13 +219,13 @@ export const timelineNodes: TimelineNode[] = [
     status: 'NeurIPS 2026 在投 / 一作',
     title: 'VQA11y · Accessibility-Aware VQA',
     org: 'NeurIPS 2026',
-    oneLiner: '构建 119K 无障碍视觉问答 benchmark，并提出 A-CoT 与 GoA，让多模态模型按安全证据推理。',
+    oneLiner: '把无障碍视觉问答从普通图像理解推进到安全、证据链和风险感知评测。',
     abstract:
       'VQA11y 聚焦盲人和低视力用户在导航中的安全关键视觉问答。论文从 727K 多模态样本池中构建 100K benchmark 与 119,469 个 QA pair，覆盖 10 类无障碍导航需求，并为每个样本组织 grounded Accessibility-aware Chain-of-Thought。进一步提出 VQA11y-Score、CoT-Q 和 Graph of Accessibility，用证据门控与安全传播评估/提升模型在危险识别、空间判断和保守决策上的可靠性。',
     contribution: [
       '一作主导问题定义、benchmark 构建、A-CoT/GoA 方法设计和论文主线叙事。',
       '设计安全加权评测指标与 19 组模型实验，对比 baseline、SFT+DPO 与结构化推理方案。',
-      '推动数据集公开到 Hugging Face，并在简历材料中记录 37k+ 下载与 VQA 数据集排名 #12。',
+      '推动数据集公开到 Hugging Face，当前约 37k+ 下载，在 VQA 数据集下载榜中位居前列。',
     ],
     keywords: ['Accessibility', 'VQA', 'A-CoT', 'GoA'],
     metrics: [
@@ -240,7 +240,7 @@ export const timelineNodes: TimelineNode[] = [
         caption: 'VQA11y teaser：从普通 VQA 走向证据门控的无障碍安全推理。',
       },
     ],
-    links: [{ label: 'Hugging Face Dataset', url: 'https://huggingface.co/datasets/VQA11y/VQA11y' }],
+    links: [{ label: 'Hugging Face Dataset', url: 'https://huggingface.co/datasets?sort=downloads&search=vqa' }],
     detail: {
       background: '通用 VQA benchmark 更关注物体识别和图像理解，但 BLV 用户真正关心的是道路是否安全、证据是否充分、模型何时应该保守拒答。',
       role: '一作',
@@ -255,7 +255,7 @@ export const timelineNodes: TimelineNode[] = [
         situation: '现有 VLM 在通用视觉问答上表现不错，但在 BLV 导航场景中容易漏掉台阶、湿滑路面、倒计时红绿灯等安全关键线索。',
         task: '我需要构建一个能评估真实无障碍推理能力的 benchmark，并提出让模型围绕证据进行保守决策的方法。',
         action: '我主导构建 VQA11y 数据集，设计 A-CoT 标注、VQA11y-Score 与 GoA 结构化推理，并完成多模型评测。',
-        result: 'Qwen3-VL-8B 在该设置下从 51.6 提升到 74.6，数据集获得 37k+ 下载，成为简历中最能体现无障碍多模态研究主线的工作。',
+        result: 'Qwen3-VL-8B 在该设置下从 51.6 提升到 74.6，数据集获得 37k+ 下载，成为无障碍多模态研究主线中的代表工作。',
       },
     },
   },
@@ -266,7 +266,7 @@ export const timelineNodes: TimelineNode[] = [
     status: 'EMNLP 2026 在投 / 一作',
     title: 'Omni-Aware RAG · Multi-Format Evidence Control',
     org: 'EMNLP 2026',
-    oneLiner: '训练无关地控制文本、图像、表格和视频证据的使用，把 MRAG 从“按模态打补丁”改成“按 latent evidence 状态调度”。',
+    oneLiner: '在统一 latent evidence-token span 上估计不确定性，训练无关地控制文本、图像、表格和视频证据的路由与注意力。',
     abstract:
       'Omni-Aware RAG 针对多模态 RAG 在证据顺序、位置偏置和模态专用启发式上的脆弱性，提出训练无关的 post-retrieval 控制框架。方法在统一 evidence-token span 上结合 grounding entropy 与 predictive entropy，控制检索、模态路由和证据强调；同时提出 Evidence Attention Bias，在不重复、不重排输入 token 的前提下调整注意力 logit，提高模型利用证据的稳定性。',
     contribution: [
@@ -311,7 +311,7 @@ export const timelineNodes: TimelineNode[] = [
     status: 'EMNLP 2026 在投 / 一作',
     title: 'MORPHEUS · Retrieval-State Forgetting',
     org: 'EMNLP 2026',
-    oneLiner: '为长期 LLM Agent 设计 wake-sleep 记忆机制：旧记忆不直接删除，而是按当前有效性 KEEP / COMPRESS / REPEL。',
+    oneLiner: '旧记忆不物理删除，而是在当前查询下 KEEP / COMPRESS / REPEL，分离历史有效性和当前有效性。',
     abstract:
       'MORPHEUS 研究长期 Agent 记忆中的“当前是否仍有效”问题。传统记忆系统关注存储和召回效率，却很少区分历史有效和当前有效。论文提出 wake-sleep 架构：wake 阶段在线编码经验并记录 utility/validity 信号，sleep 阶段进行局部冲突修复和全局对比巩固，通过 KEEP、COMPRESS、REPEL 三路路由抑制 stale memory，同时保留历史审计能力。',
     contribution: [
@@ -356,7 +356,7 @@ export const timelineNodes: TimelineNode[] = [
     status: 'ICML 2026 Spotlight',
     title: 'Position · Assistive Agents Need Accessibility Alignment',
     org: 'ICML 2026 / CCF-A',
-    oneLiner: '提出 accessibility alignment：辅助 Agent 不只是多模态能力问题，而是目标、交互、风险和评测都要对齐 BLV 用户。',
+    oneLiner: '提出 accessibility alignment：辅助 Agent 需要在目标、交互、风险和生命周期上对齐 BLV 用户，而不只是提升多模态能力。',
     abstract:
       '这篇 position paper 基于 417 篇相关工作和 778 个真实辅助任务实例，指出当前 Agentic AI 往往默认以视力正常用户为中心，导致在盲人和低视力用户场景中出现不可验证输出、错误代价不对称、认知负担过高和隐私风险。论文将无障碍能力上升为 alignment 问题，提出贯穿用户研究、系统设计和部署后迭代的 accessibility-aligned lifecycle。',
     contribution: [
@@ -486,29 +486,29 @@ export const timelineNodes: TimelineNode[] = [
     type: '开源',
     date: '2026',
     status: '5.4k+ Stars',
-    title: 'AgentGuide · Agent 面试与知识图谱',
+    title: 'AgentGuide · Agent 知识图谱与资料库',
     org: 'GitHub 开源项目',
-    oneLiner: '用 OpenClaw 自动化整理 30k+ Agent 面试经验，抽取高频知识点并组织成原理层、工程层、面试层知识图谱。',
+    oneLiner: '用 OpenClaw 自动化整理 30k+ Agent 资料与实践经验，抽取高频知识点并组织成原理层、工程层、实践层知识图谱。',
     metrics: [
       { after: '5.4k+', label: 'GitHub Stars' },
       { after: '30k+', label: '经验样本' },
       { after: 'Top 20', label: 'Multi-Agent Topic' },
     ],
-    keywords: ['Open Source', 'Knowledge Graph', 'Agent Interview'],
+    keywords: ['Open Source', 'Knowledge Graph', 'Agent Practice'],
     detail: {
-      background: 'Agent 方向资料增长很快，但学习路径、论文脉络、工程范式和面试问题容易碎片化。',
+      background: 'Agent 方向资料增长很快，但学习路径、论文脉络、工程范式和实践问题容易碎片化。',
       role: '核心维护者',
       approach: [
-        '基于 OpenClaw 构建爬取、清洗、合并流水线，整理 30k+ 面试经验样本。',
-        '用 LLM 抽取高频知识点，将内容组织成原理层、工程层、面试层知识图谱。',
+        '基于 OpenClaw 构建爬取、清洗、合并流水线，整理 30k+ Agent 资料与实践样本。',
+        '用 LLM 抽取高频知识点，将内容组织成原理层、工程层、实践层知识图谱。',
         '持续维护 Agent 论文、工具、项目和实践案例索引，让读者能快速建立全局视角。',
       ],
       tradeoffs: '开源项目需要在覆盖面和维护成本之间取舍，优先保证结构清晰、链接有效和持续更新。',
       star: {
-        situation: 'Agent 方向论文、工具和面试经验增长很快，新入门者很难区分核心原理、工程实践和面试高频问题。',
-        task: '我的目标是把分散资料整理成可检索、可持续维护的知识图谱，并让开源项目对求职和学习都真正有用。',
-        action: '我基于 OpenClaw 搭建爬取/清洗/合并流水线，用 LLM 从 30k+ 面试经验中抽取高频知识点并分层组织。',
-        result: 'AgentGuide 获得 5.4k+ GitHub Stars，进入 Multi-Agent topic Top 20，成为简历中体现开源影响力和工程自动化能力的项目。',
+        situation: 'Agent 方向论文、工具和实践经验增长很快，新入门者很难区分核心原理、工程实践和高频问题模式。',
+        task: '我的目标是把分散资料整理成可检索、可持续维护的知识图谱，并让开源项目对学习和工程实践真正有用。',
+        action: '我基于 OpenClaw 搭建爬取/清洗/合并流水线，用 LLM 从 30k+ 资料与实践样本中抽取高频知识点并分层组织。',
+        result: 'AgentGuide 获得 5.4k+ GitHub Stars，进入 Multi-Agent topic Top 20，成为体现开源影响力和工程自动化能力的项目。',
       },
     },
     links: [{ label: 'GitHub', url: 'https://github.com/adongwanai/AgentGuide' }],
