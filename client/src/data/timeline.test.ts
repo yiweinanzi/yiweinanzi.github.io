@@ -58,8 +58,8 @@ describe('portfolio timeline content', () => {
   it('uses concrete technical anchors in core project STAR copy', () => {
     const expectedAnchors: Record<string, string[]> = {
       'goafar-agentic-planning': ['next-POI', 'OR-Tools', 'GRPO', 'reward hacking'],
-      ktclaw: ['上下文污染', 'trace_id', '四层记忆', '动态上下文'],
-      tinyclaw: ['SOP', 'Skill', '失败回退', '端侧'],
+      ktclaw: ['企业数字员工', '上下文污染', '四层记忆', '可复用 Skill'],
+      tinyclaw: ['端侧 / Edge', '私有数据', 'SOP', '本地工具'],
       agentguide: ['OpenClaw', '30k+', '知识图谱', 'Top 20'],
     };
 
